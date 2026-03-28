@@ -1,60 +1,32 @@
-<script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import { RouterLink } from 'vue-router'
-
-interface Product {
-  id: number
-  title: string
-  price: number
-  thumbnail: string
-}
-
-const products = ref<Product[]>([])
-const search = ref('')
-
-onMounted(async () => {
-  const res = await fetch('https://dummyjson.com/products')
-  const data = await res.json()
-  products.value = data.products
-})
-
-const filteredProducts = computed(() => {
-  return products.value.filter((product) =>
-    product.title.toLowerCase().includes(search.value.toLowerCase())
-  )
-})
-</script>
-
 <template>
-  <div class="p-6">
-    <h1 class="mb-6 text-3xl font-bold text-blue-600">
-      Product List
+  <div class="min-h-screen bg-gray-100 p-6">
+    <h1 class="mb-6 text-4xl font-bold text-center text-blue-700">
+      Product Store
     </h1>
 
-    <input
-      v-model="search"
-      type="text"
-      placeholder="Search products..."
-      class="mb-6 w-full rounded border p-3"
-    />
+    <!-- Search -->
+    <div class="mb-6 flex justify-center">
+      <input
+        v-model="search"
+        type="text"
+        placeholder="Search products..."
+        class="w-full max-w-md rounded-lg border p-3 shadow"
+      />
+    </div>
 
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <!-- Product Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div
         v-for="product in filteredProducts"
         :key="product.id"
-        class="rounded border p-4 shadow"
+        class="bg-white p-4 rounded-lg shadow"
       >
-        <img
-          :src="product.thumbnail"
-          :alt="product.title"
-          class="mb-2 h-40 w-full object-cover"
-        />
-        <h2 class="font-bold">{{ product.title }}</h2>
-        <p class="mb-3">${{ product.price }}</p>
+        <h2 class="text-lg font-semibold">{{ product.title }}</h2>
+        <p class="text-gray-600">${{ product.price }}</p>
 
         <RouterLink
           :to="`/product/${product.id}`"
-          class="inline-block rounded bg-blue-600 px-4 py-2 text-white"
+          class="mt-2 inline-block bg-blue-600 text-white px-4 py-2 rounded"
         >
           View Details
         </RouterLink>
@@ -62,3 +34,24 @@ const filteredProducts = computed(() => {
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+
+const products = ref([])
+const search = ref('')
+
+// Fetch data
+onMounted(async () => {
+  const res = await fetch('https://dummyjson.com/products')
+  const data = await res.json()
+  products.value = data.products
+})
+
+// Filter products
+const filteredProducts = computed(() => {
+  return products.value.filter(product =>
+    product.title.toLowerCase().includes(search.value.toLowerCase())
+  )
+})
+</script>
