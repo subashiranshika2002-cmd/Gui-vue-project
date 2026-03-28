@@ -19,10 +19,10 @@ onMounted(async () =>{
     </RouterLink>
    <div v-if="product" class="rounded-lg border p-6 shadow">
       <img
-        :src="product.thumbnail"
-        :alt="product.title"
-        class="mb-4 h-64 w-full rounded object-cover"
-      />
+  :src="product.images?.[0] || product.thumbnail"
+  :alt="product.title"
+  class="mb-4 h-56 w-full rounded-lg bg-gray-100 object-contain p-4"
+/>
       <h1 class="text-3xl font-bold">{{ product.title }}</h1>
       <p class="mt-4 text-gray-700">{{ product.description }}</p>
       <p class="mt-4 text-xl font-semibold text-green-600">
