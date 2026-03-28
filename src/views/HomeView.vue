@@ -15,26 +15,25 @@
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
       <div
-        v-for="product in filteredProducts"
-        :key="product.id"
-        class="rounded-lg bg-white p-4 shadow"
-      >
-        <img
-  :src="product.thumbnail"
-  :alt="product.title"
-  class="mb-4 h-56 w-full rounded-lg bg-gray-100 object-contain p-4"
-/>
+  v-for="product in filteredProducts"
+  :key="product.id"
+  class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition"
+>
+  <img
+    :src="product.thumbnail"
+    class="h-40 w-full object-contain mb-4 bg-gray-100 p-2 rounded"
+  />
 
-        <h2 class="text-lg font-semibold">{{ product.title }}</h2>
-        <p class="mb-3 text-gray-600">${{ product.price }}</p>
+  <h2 class="font-semibold text-lg">{{ product.title }}</h2>
+  <p class="text-green-600 font-bold">${{ product.price }}</p>
 
-        <RouterLink
-          :to="`/product/${product.id}`"
-          class="mt-2 inline-block rounded bg-blue-600 px-4 py-2 text-white"
-        >
-          View Details
-        </RouterLink>
-      </div>
+  <RouterLink
+    :to="`/product/${product.id}`"
+    class="block mt-3 text-center bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+  >
+    View Details
+  </RouterLink>
+</div>
     </div>
   </div>
 </template>

@@ -13,22 +13,28 @@ onMounted(async () =>{
 })
 </script>
 <template>
-    <div class="p-6">
-        <RouterLink to="/" class="mb-4 inline-block text-blue-600 underline">
-      Back to Product List
-    </RouterLink>
-   <div v-if="product" class="rounded-lg border p-6 shadow">
+  <div class="p-6 max-w-4xl mx-auto">
+    <div class="bg-white p-6 rounded-lg shadow">
       <img
-  :src="product.images?.[0] || product.thumbnail"
-  :alt="product.title"
-  class="mb-4 h-56 w-full rounded-lg bg-gray-100 object-contain p-4"
-/>
-      <h1 class="text-3xl font-bold">{{ product.title }}</h1>
-      <p class="mt-4 text-gray-700">{{ product.description }}</p>
-      <p class="mt-4 text-xl font-semibold text-green-600">
+        :src="product.images?.[0]"
+        class="h-64 w-full object-contain mb-6"
+      />
+
+      <h1 class="text-2xl font-bold mb-2">
+        {{ product.title }}
+      </h1>
+
+      <p class="text-gray-600 mb-4">
+        {{ product.description }}
+      </p>
+
+      <p class="text-green-600 text-xl font-bold">
         ${{ product.price }}
       </p>
-      <p class="mt-2">Category: {{ product.category }}</p>
+
+      <p class="text-sm text-gray-500 mt-2">
+        Category: {{ product.category }}
+      </p>
     </div>
-    </div>
+  </div>
 </template>
