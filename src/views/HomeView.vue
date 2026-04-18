@@ -1,9 +1,47 @@
 <template>
   <div class="min-h-screen bg-gray-100">
-    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-8 text-white shadow">
-      
+    <!-- Hero Section -->
+    <section class="bg-white">
+      <div class="mx-auto grid max-w-7xl items-center gap-8 px-6 py-10 md:grid-cols-2">
+        <div>
+          <h2 class="text-4xl font-extrabold text-gray-800 md:text-5xl">
+            Discover Your
+            <span class="text-blue-600">Best Products</span>
+          </h2>
 
-      <div class="mt-6 flex flex-col items-center gap-4 md:flex-row md:justify-center">
+          <p class="mt-4 text-lg text-gray-600">
+            Shop smart with stylish products, easy search, and fast details view.
+          </p>
+
+          <div class="mt-6 flex gap-4">
+            <a
+              href="#products"
+              class="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700"
+            >
+              Shop Now
+            </a>
+
+            <button
+              class="rounded-lg border border-blue-600 px-6 py-3 font-medium text-blue-600 transition hover:bg-blue-50"
+            >
+              Explore
+            </button>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <img
+            src="https://dummyjson.com/image/400x250/4b5563/ffffff?text=Shopping+Store"
+            alt="Hero banner"
+            class="w-full max-w-md rounded-2xl shadow-lg"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Search + Filter -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-8 text-white shadow">
+      <div class="mt-2 flex flex-col items-center gap-4 md:flex-row md:justify-center">
         <input
           v-model="search"
           type="text"
@@ -27,7 +65,8 @@
       </div>
     </div>
 
-    <div class="p-6">
+    <!-- Products -->
+    <div id="products" class="p-6">
       <h2 class="mb-6 text-2xl font-bold text-gray-800">Popular Products</h2>
 
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
