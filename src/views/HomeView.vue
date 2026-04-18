@@ -1,39 +1,69 @@
 <template>
-  <div class="min-h-screen bg-gray-100 p-6">
-    <h1 class="mb-6 text-center text-4xl font-bold text-blue-700">
-      Product Store
-    </h1>
+  <div class="min-h-screen bg-gray-100">
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-8 text-white shadow">
+      
 
-    <div class="mb-6 flex justify-center">
-      <input
-        v-model="search"
-        type="text"
-        placeholder="Search products..."
-        class="w-full max-w-md rounded-lg border p-3 shadow"
-      />
+      <div class="mt-6 flex flex-col items-center gap-4 md:flex-row md:justify-center">
+        <input
+          v-model="search"
+          type="text"
+          placeholder="Search products..."
+          class="w-full max-w-xl rounded-lg border-none p-3 text-black shadow outline-none"
+        />
+
+        <select
+          v-model="selectedCategory"
+          class="w-full max-w-xs rounded-lg border-none p-3 text-black shadow outline-none"
+        >
+          <option value="">All Categories</option>
+          <option
+            v-for="category in categories"
+            :key="category"
+            :value="category"
+          >
+            {{ category }}
+          </option>
+        </select>
+      </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-      <div
-  v-for="product in filteredProducts"
-  :key="product.id"
-  class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition"
->
-  <img
-    :src="product.thumbnail"
-    class="h-40 w-full object-contain mb-4 bg-gray-100 p-2 rounded"
-  />
+    <div class="p-6">
+      <h2 class="mb-6 text-2xl font-bold text-gray-800">Popular Products</h2>
 
-  <h2 class="font-semibold text-lg">{{ product.title }}</h2>
-  <p class="text-green-600 font-bold">${{ product.price }}</p>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          v-for="product in filteredProducts"
+          :key="product.id"
+          class="rounded-2xl bg-white p-4 shadow transition hover:-translate-y-1 hover:shadow-lg"
+        >
+          <img
+            :src="product.thumbnail"
+            :alt="product.title"
+            class="mb-4 h-48 w-full rounded-xl bg-gray-100 object-contain p-3"
+          />
 
-  <RouterLink
-    :to="`/product/${product.id}`"
-    class="block mt-3 text-center bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-  >
-    View Details
-  </RouterLink>
-</div>
+          <h3 class="mb-2 text-lg font-semibold text-gray-800">
+            {{ product.title }}
+          </h3>
+
+          <p class="mb-2 text-sm text-gray-500">
+            {{ product.category }}
+          </p>
+
+          <div class="mb-4 flex items-center justify-between">
+            <span class="text-xl font-bold text-green-600">
+              ${{ product.price }}
+            </span>
+          </div>
+
+          <RouterLink
+            :to="`/product/${product.id}`"
+            class="block rounded-lg bg-blue-600 py-2 text-center font-medium text-white transition hover:bg-blue-700"
+          >
+            View Details
+          </RouterLink>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -44,6 +74,7 @@ import { RouterLink } from 'vue-router'
 
 const products = ref([])
 const search = ref('')
+const selectedCategory = ref('')
 
 onMounted(async () => {
   const res = await fetch('https://dummyjson.com/products')
@@ -51,9 +82,21 @@ onMounted(async () => {
   products.value = data.products
 })
 
+const categories = computed(() => {
+  return [...new Set(products.value.map(product => product.category))]
+})
+
 const filteredProducts = computed(() => {
-  return products.value.filter(product =>
-    product.title.toLowerCase().includes(search.value.toLowerCase())
-  )
+  return products.value.filter(product => {
+    const matchesSearch = product.title
+      .toLowerCase()
+      .includes(search.value.toLowerCase())
+
+    const matchesCategory =
+      selectedCategory.value === '' ||
+      product.category === selectedCategory.value
+
+    return matchesSearch && matchesCategory
+  })
 })
 </script>
