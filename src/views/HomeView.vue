@@ -1,6 +1,14 @@
 <template>
   <div class="min-h-screen bg-gray-100">
     <div class="bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-8 text-white shadow">
+      <div class="mb-4">
+  <RouterLink
+    to="/"
+    class="inline-block rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+  >
+    ← Back to Home
+  </RouterLink>
+</div>
       <h1 class="text-center text-4xl font-extrabold">Products Page</h1>
       <p class="mt-2 text-center text-blue-100">
         Browse products, search items, and filter by category
