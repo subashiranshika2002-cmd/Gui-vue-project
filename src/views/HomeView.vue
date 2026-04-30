@@ -12,7 +12,7 @@
 
       <h1 class="text-center text-4xl font-extrabold">Electronics Products</h1>
       <p class="mt-2 text-center text-blue-100">
-        Browse products, search items, and filter by category
+        Browse phones, laptops, TVs, fridges, and washing machines
       </p>
 
       <div class="mt-6 flex flex-col items-center gap-4 md:flex-row md:justify-center">
@@ -20,7 +20,7 @@
           v-model="search"
           type="text"
           placeholder="Search products..."
-          class="w-full max-w-xl rounded-lg border-none p-3 text-black shadow outline-none"
+          class="w-full max-w-xl rounded-lg border-none p-3 text-black placeholder-black shadow outline-none"
         />
 
         <select
@@ -42,7 +42,11 @@
     <div class="p-6">
       <h2 class="mb-6 text-2xl font-bold text-gray-800">Popular Products</h2>
 
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div v-if="filteredProducts.length === 0" class="rounded-xl bg-white p-6 text-center text-gray-600 shadow">
+        No products found.
+      </div>
+
+      <div v-else class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="product in filteredProducts"
           :key="product.id"
@@ -84,44 +88,74 @@
 import { ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 
-const products = ref([])
+import tvImg from '../assets/product-extra/tv.jpg'
+import fridgeImg from '../assets/product-extra/fridge.jpg'
+import washingMachineImg from '../assets/product-extra/washing-machine.jpg'
+
+const apiProducts = ref([])
 const search = ref('')
 const selectedCategory = ref('')
 
-const allowedCategories = [
-  'smartphones',
-  'laptops',
-  'mobile-accessories',
-  'tablets'
+// local custom products
+const extraProducts = [
+  {
+    id: 1001,
+    title: 'Samsung Smart TV 55 Inch',
+    category: 'tv',
+    price: 899.99,
+    thumbnail: tvImg,
+  },
+  {
+    id: 1002,
+    title: 'LG Double Door Fridge',
+    category: 'fridge',
+    price: 1299.99,
+    thumbnail: fridgeImg,
+  },
+  {
+    id: 1003,
+    title: 'Samsung Washing Machine',
+    category: 'washing machine',
+    price: 799.99,
+    thumbnail: washingMachineImg,
+  },
 ]
 
 onMounted(async () => {
-  const res = await fetch('https://dummyjson.com/products')
+  const res = await fetch('https://dummyjson.com/products?limit=200')
   const data = await res.json()
-  products.value = data.products
+
+  // keep only smartphones and laptops from API
+  apiProducts.value = data.products
+    .filter(product => ['smartphones', 'laptops'].includes(product.category))
+    .map(product => ({
+      id: product.id,
+      title: product.title,
+      category: product.category === 'smartphones' ? 'mobile phones' : 'laptops',
+      price: product.price,
+      thumbnail: product.thumbnail,
+    }))
+})
+
+const allProducts = computed(() => {
+  return [...apiProducts.value, ...extraProducts]
 })
 
 const categories = computed(() => {
-  return [...new Set(
-    products.value
-      .filter(product => allowedCategories.includes(product.category))
-      .map(product => product.category)
-  )]
+  return [...new Set(allProducts.value.map(product => product.category))]
 })
 
 const filteredProducts = computed(() => {
-  return products.value
-    .filter(product => allowedCategories.includes(product.category))
-    .filter(product => {
-      const matchesSearch = product.title
-        .toLowerCase()
-        .includes(search.value.toLowerCase())
+  return allProducts.value.filter(product => {
+    const matchesSearch = product.title
+      .toLowerCase()
+      .includes(search.value.toLowerCase())
 
-      const matchesCategory =
-        selectedCategory.value === '' ||
-        product.category === selectedCategory.value
+    const matchesCategory =
+      selectedCategory.value === '' ||
+      product.category === selectedCategory.value
 
-      return matchesSearch && matchesCategory
-    })
+    return matchesSearch && matchesCategory
+  })
 })
 </script>
