@@ -7,9 +7,10 @@
         </h1>
 
         <div class="flex gap-6 text-sm font-medium md:text-base">
+          <RouterLink to="/login" class="hover:text-yellow-200">Login</RouterLink>
+          <RouterLink to="/about" class="hover:text-yellow-200">About Us</RouterLink>
           <RouterLink to="/" class="hover:text-yellow-200">Home</RouterLink>
           <RouterLink to="/products" class="hover:text-yellow-200">Products</RouterLink>
-          <RouterLink to="/login" class="hover:text-yellow-200">Login</RouterLink>
         </div>
       </div>
     </nav>
