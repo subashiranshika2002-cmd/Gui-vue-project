@@ -1,21 +1,20 @@
 <template>
   <div>
-    <nav class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 shadow">
-      <h1 class="text-3xl font-extrabold text-center">
-        My Collection
-      </h1>
+    <nav class="bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-4 text-white shadow">
+      <div class="mx-auto flex max-w-7xl items-center justify-between">
+        <h1 class="text-2xl font-extrabold">Electronics Store</h1>
 
-      <p class="mt-2 text-center text-sm text-blue-100">
-        Easy • Fast • Smart Shopping — Order Now 🛒
-      </p>
-
-      <div class="mt-3 text-center">
-        <button class="rounded bg-white px-4 py-1 text-blue-700 hover:bg-gray-200">
-          Shop Now
-        </button>
+        <div class="flex gap-6 text-sm font-medium">
+          <RouterLink to="/" class="hover:text-yellow-200">Home</RouterLink>
+          <RouterLink to="/products" class="hover:text-yellow-200">Products</RouterLink>
+        </div>
       </div>
     </nav>
 
-    <router-view />
+    <RouterView />
   </div>
 </template>
+
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+</script>

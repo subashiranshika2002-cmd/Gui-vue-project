@@ -2,14 +2,15 @@
   <div class="min-h-screen bg-gray-100">
     <div class="bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-8 text-white shadow">
       <div class="mb-4">
-  <RouterLink
-    to="/"
-    class="inline-block rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
-  >
-    ← Back to Home
-  </RouterLink>
-</div>
-      <h1 class="text-center text-4xl font-extrabold">Products Page</h1>
+        <RouterLink
+          to="/"
+          class="inline-block rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+        >
+          ← Back to Home
+        </RouterLink>
+      </div>
+
+      <h1 class="text-center text-4xl font-extrabold">Electronics Products</h1>
       <p class="mt-2 text-center text-blue-100">
         Browse products, search items, and filter by category
       </p>
@@ -87,6 +88,13 @@ const products = ref([])
 const search = ref('')
 const selectedCategory = ref('')
 
+const allowedCategories = [
+  'smartphones',
+  'laptops',
+  'mobile-accessories',
+  'tablets'
+]
+
 onMounted(async () => {
   const res = await fetch('https://dummyjson.com/products')
   const data = await res.json()
@@ -94,20 +102,26 @@ onMounted(async () => {
 })
 
 const categories = computed(() => {
-  return [...new Set(products.value.map(product => product.category))]
+  return [...new Set(
+    products.value
+      .filter(product => allowedCategories.includes(product.category))
+      .map(product => product.category)
+  )]
 })
 
 const filteredProducts = computed(() => {
-  return products.value.filter(product => {
-    const matchesSearch = product.title
-      .toLowerCase()
-      .includes(search.value.toLowerCase())
+  return products.value
+    .filter(product => allowedCategories.includes(product.category))
+    .filter(product => {
+      const matchesSearch = product.title
+        .toLowerCase()
+        .includes(search.value.toLowerCase())
 
-    const matchesCategory =
-      selectedCategory.value === '' ||
-      product.category === selectedCategory.value
+      const matchesCategory =
+        selectedCategory.value === '' ||
+        product.category === selectedCategory.value
 
-    return matchesSearch && matchesCategory
-  })
+      return matchesSearch && matchesCategory
+    })
 })
 </script>
