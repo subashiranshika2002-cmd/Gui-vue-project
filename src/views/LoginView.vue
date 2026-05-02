@@ -1,103 +1,71 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
-    <div class="mx-auto grid min-h-screen max-w-7xl md:grid-cols-2">
-      <!-- Left side: login form -->
-      <div class="flex items-center justify-center bg-white px-8 py-12">
-        <div class="w-full max-w-md">
-          <h1 class="mb-2 text-4xl font-extrabold text-gray-800">
-            Welcome to VoltEdge
+  <div class="relative min-h-screen bg-black">
+    
+    <!-- BACKGROUND IMAGE -->
+    <img
+      :src="loginCover"
+      class="absolute inset-0 h-full w-full object-contain md:object-cover"
+      alt="background"
+    />
+
+    <!-- DARK OVERLAY -->
+    <div class="absolute inset-0 bg-black/60"></div>
+
+    <!-- CONTENT -->
+    <div class="relative z-10 flex min-h-screen items-center px-6">
+      
+      <div class="mx-auto grid w-full max-w-7xl items-center gap-10 md:grid-cols-2">
+
+        <!-- LEFT SIDE (TEXT + FORM) -->
+        <div class="text-white">
+          <h1 class="text-4xl font-extrabold md:text-5xl">
+            Welcome to <span class="text-yellow-300">VoltEdge</span>
           </h1>
 
-          <p class="mb-8 text-gray-500">
-            Sign in to explore electronics for every lifestyle and budget.
+          <p class="mt-4 text-lg text-gray-200">
+            Enter your details to continue
           </p>
 
-          <form class="space-y-5">
+          <!-- FORM -->
+          <form class="mt-8 max-w-md space-y-5">
             <div>
-              <label class="mb-2 block text-sm font-medium text-gray-700">
-                Full Name
-              </label>
-              <input
-                type="text"
-                placeholder="Enter your full name"
-                class="w-full rounded-lg border border-gray-300 p-3 outline-none transition focus:border-blue-500"
-              />
-            </div>
-
-            <div>
-              <label class="mb-2 block text-sm font-medium text-gray-700">
+              <label class="mb-2 block text-sm font-semibold">
                 Email
               </label>
               <input
                 type="email"
                 placeholder="Enter your email"
-                class="w-full rounded-lg border border-gray-300 p-3 outline-none transition focus:border-blue-500"
+                class="w-full rounded-xl border border-white/30 bg-white/20 p-3 text-white placeholder-white/70 backdrop-blur-md outline-none focus:border-white"
               />
             </div>
 
             <div>
-              <label class="mb-2 block text-sm font-medium text-gray-700">
+              <label class="mb-2 block text-sm font-semibold">
                 Phone Number
               </label>
               <input
                 type="tel"
                 placeholder="Enter your phone number"
-                class="w-full rounded-lg border border-gray-300 p-3 outline-none transition focus:border-blue-500"
-              />
-            </div>
-
-            <div>
-              <label class="mb-2 block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                class="w-full rounded-lg border border-gray-300 p-3 outline-none transition focus:border-blue-500"
+                class="w-full rounded-xl border border-white/30 bg-white/20 p-3 text-white placeholder-white/70 backdrop-blur-md outline-none focus:border-white"
               />
             </div>
 
             <button
-              type="submit"
-              class="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
+              class="w-full rounded-xl bg-blue-600 py-3 text-lg font-semibold transition hover:bg-blue-700"
             >
               Login
             </button>
           </form>
-
-          <p class="mt-6 text-center text-sm text-gray-500">
-            Don’t have an account?
-            <span class="font-medium text-blue-600">Register now</span>
-          </p>
         </div>
-      </div>
 
-      <!-- Right side: cover image -->
-      <div class="relative hidden md:block">
-        <img
-          src="/src/assets/picture/login-cover.png"
-          alt="Electronics store"
-          class="h-full w-full object-cover"
-        />
+        <!-- RIGHT SIDE (EMPTY for spacing / image focus) -->
+        <div></div>
 
-        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
-
-        <div class="absolute bottom-10 left-10 right-10 text-white">
-          <h2 class="text-4xl font-extrabold leading-tight">
-            Electronics for <br />
-            Every Home
-          </h2>
-
-          <p class="mt-4 text-lg text-gray-200">
-            Find phones, laptops, TVs, fridges, washers, and more in one smart place.
-          </p>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import loginCover from '../assets/picture/homecover.jpg'
 </script>
-
-          
