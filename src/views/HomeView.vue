@@ -155,14 +155,28 @@ onMounted(async () => {
   const data = await res.json()
 
   apiProducts.value = data.products
-    .filter(product => ['smartphones', 'laptops'].includes(product.category))
-    .map(product => ({
-      id: product.id,
-      title: product.title,
-      category: product.category === 'smartphones' ? 'mobile phones' : 'laptops',
-      price: product.price,
-      thumbnail: product.thumbnail,
-    }))
+  .filter(product =>
+    ['smartphones', 'laptops', 'mobile-accessories'].includes(product.category)
+  )
+  .filter(product =>
+    product.category !== 'mobile-accessories' ||
+    product.title.toLowerCase().includes('head') ||
+    product.title.toLowerCase().includes('speaker') ||
+    product.title.toLowerCase().includes('jbl') ||
+    product.title.toLowerCase().includes('airpods')
+  )
+  .map(product => ({
+    id: product.id,
+    title: product.title,
+    category:
+      product.category === 'smartphones'
+        ? 'mobile phones'
+        : product.category === 'mobile-accessories'
+        ? 'accessories'
+        : 'laptops',
+    price: product.price,
+    thumbnail: product.thumbnail,
+  }))
 
   sliderInterval = setInterval(() => {
     currentIndex.value = (currentIndex.value + 1) % sliderItems.length
