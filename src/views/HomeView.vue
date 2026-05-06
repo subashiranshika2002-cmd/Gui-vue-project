@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
     <!-- Top header section -->
     <div class="bg-gradient-to-r from-blue-600 to-indigo-700 px-4 py-5 text-white shadow sm:px-6 sm:py-6">
       <div class="mx-auto max-w-7xl">
@@ -12,9 +12,8 @@
           </RouterLink>
         </div>
 
-        <!-- Responsive header content -->
         <div class="grid grid-cols-1 items-center gap-6 md:grid-cols-2">
-          <!-- LEFT SIDE IMAGE -->
+          <!-- LEFT -->
           <div class="flex justify-center md:justify-start">
             <transition name="fade-slide" mode="out-in">
               <div
@@ -33,9 +32,9 @@
             </transition>
           </div>
 
-          <!-- RIGHT SIDE TITLE + SEARCH -->
+          <!-- RIGHT -->
           <div>
-            <h1 class="text-center text-4xl font-extrabold text-yellow-300 tracking-wide sm:text-5xl md:text-left">
+            <h1 class="text-center text-4xl font-extrabold tracking-wide text-yellow-300 sm:text-5xl md:text-left">
               Electronics Products
             </h1>
 
@@ -72,11 +71,11 @@
 
     <!-- Products -->
     <div class="p-4 sm:p-6">
-      <h2 class="mb-6 text-2xl font-bold text-gray-800">Popular Products</h2>
+      <h2 class="mb-6 text-2xl font-bold text-gray-800 dark:text-white">Popular Products</h2>
 
       <div
         v-if="filteredProducts.length === 0"
-        class="rounded-xl bg-white p-6 text-center text-gray-600 shadow"
+        class="rounded-xl bg-white p-6 text-center text-gray-600 shadow dark:bg-gray-800 dark:text-gray-300"
       >
         No products found.
       </div>
@@ -85,26 +84,35 @@
         <div
           v-for="product in filteredProducts"
           :key="product.id"
-          class="rounded-2xl bg-white p-4 shadow transition hover:-translate-y-1 hover:shadow-lg"
+          class="rounded-2xl bg-white p-4 shadow transition hover:-translate-y-1 hover:shadow-lg dark:bg-gray-800"
         >
           <img
             :src="product.thumbnail"
             :alt="product.title"
-            class="mb-4 h-48 w-full rounded-xl bg-gray-100 object-contain p-3"
+            class="mb-4 h-48 w-full rounded-xl bg-gray-100 object-contain p-3 dark:bg-gray-700"
           />
 
-          <h3 class="mb-2 text-lg font-semibold text-gray-800">
+          <h3 class="mb-2 text-lg font-semibold text-gray-800 dark:text-white">
             {{ product.title }}
           </h3>
 
-          <p class="mb-2 text-sm text-gray-500">
+          <p class="mb-2 text-sm text-gray-500 dark:text-gray-300">
             {{ product.category }}
           </p>
 
           <div class="mb-4 flex items-center justify-between">
-            <span class="text-xl font-bold text-green-600">
-              ${{ product.price }}
-            </span>
+            <div class="flex items-center gap-3">
+              <span class="text-xl font-bold text-green-600">
+                ${{ product.price }}
+              </span>
+
+              <span
+                v-if="product.discount"
+                class="rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-600"
+              >
+                {{ product.discount }}% OFF
+              </span>
+            </div>
           </div>
 
           <RouterLink
@@ -155,28 +163,34 @@ onMounted(async () => {
   const data = await res.json()
 
   apiProducts.value = data.products
-  .filter(product =>
-    ['smartphones', 'laptops', 'mobile-accessories'].includes(product.category)
-  )
-  .filter(product =>
-    product.category !== 'mobile-accessories' ||
-    product.title.toLowerCase().includes('head') ||
-    product.title.toLowerCase().includes('speaker') ||
-    product.title.toLowerCase().includes('jbl') ||
-    product.title.toLowerCase().includes('airpods')
-  )
-  .map(product => ({
-    id: product.id,
-    title: product.title,
-    category:
-      product.category === 'smartphones'
-        ? 'mobile phones'
-        : product.category === 'mobile-accessories'
-        ? 'accessories'
-        : 'laptops',
-    price: product.price,
-    thumbnail: product.thumbnail,
-  }))
+    .filter(product =>
+      ['smartphones', 'laptops', 'mobile-accessories'].includes(product.category)
+    )
+    .filter(product =>
+      product.category !== 'mobile-accessories' ||
+      product.title.toLowerCase().includes('head') ||
+      product.title.toLowerCase().includes('speaker') ||
+      product.title.toLowerCase().includes('jbl') ||
+      product.title.toLowerCase().includes('airpods')
+    )
+    .map(product => ({
+      id: product.id,
+      title: product.title,
+      category:
+        product.category === 'smartphones'
+          ? 'mobile phones'
+          : product.category === 'mobile-accessories'
+          ? 'accessories'
+          : 'laptops',
+      price: product.price,
+      thumbnail: product.thumbnail,
+      discount:
+        product.title.toLowerCase().includes('head') ||
+        product.title.toLowerCase().includes('speaker') ||
+        product.title.toLowerCase().includes('jbl')
+          ? 25
+          : null,
+    }))
 
   sliderInterval = setInterval(() => {
     currentIndex.value = (currentIndex.value + 1) % sliderItems.length
@@ -232,9 +246,7 @@ const filteredProducts = computed(() => {
     return matchesSearch && matchesCategory
   })
 })
-</script>
-
-<style scoped>
+</script><style scoped>
 .fade-slide-enter-active,
 .fade-slide-leave-active {
   transition: all 0.6s ease;
@@ -249,4 +261,5 @@ const filteredProducts = computed(() => {
   opacity: 0;
   transform: translateY(-12px);
 }
+
 </style>

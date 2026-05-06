@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
     <!-- Hero section -->
     <section class="bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-400 px-4 py-10 text-white sm:px-6 sm:py-12 md:py-14">
       <div class="mx-auto max-w-6xl text-center">
-        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-blue-80 sm:text-sm">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-blue-100 sm:text-sm">
           Smart Electronics Store
         </p>
 
@@ -27,10 +27,10 @@
 
     <!-- Featured + Offer section -->
     <section class="px-4 py-8 sm:px-6 sm:py-10">
-      <div class="mx-auto max-w-6xl grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <!-- Left side: Featured categories -->
+      <div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 lg:grid-cols-2">
+        <!-- Left side -->
         <div>
-          <h2 class="mb-6 text-center text-3xl font-extrabold text-gray-800 sm:text-4xl lg:text-left">
+          <h2 class="mb-6 text-center text-3xl font-extrabold text-gray-800 dark:text-white sm:text-4xl lg:text-left">
             Featured Categories
           </h2>
 
@@ -38,71 +38,72 @@
             <div
               v-for="item in categoryItems"
               :key="item.name"
-              class="rounded-2xl bg-white p-3 shadow-md transition hover:-translate-y-1 hover:shadow-lg sm:p-4"
+              class="rounded-2xl bg-white p-3 shadow-md transition hover:-translate-y-1 hover:shadow-lg dark:bg-gray-800 sm:p-4"
             >
               <img
                 :src="item.image"
                 :alt="item.name"
-                class="h-28 w-full rounded-xl bg-gray-100 object-contain sm:h-36 md:h-40"
+                class="h-28 w-full rounded-xl bg-gray-100 object-contain dark:bg-gray-700 sm:h-36 md:h-40"
               />
 
-              <h3 class="mt-3 text-center text-base font-bold text-gray-800 sm:text-lg">
+              <h3 class="mt-3 text-center text-base font-bold text-gray-800 dark:text-white sm:text-lg">
                 {{ item.name }}
               </h3>
 
-              <p class="mt-1 text-center text-xs text-gray-500 sm:text-sm">
+              <p class="mt-1 text-center text-xs text-gray-500 dark:text-gray-300 sm:text-sm">
                 {{ item.description }}
               </p>
             </div>
           </div>
         </div>
 
-        <!-- Right side: Special Offer -->
-        <div class="rounded-3xl bg-gradient-to-br from-yellow-50 via-pink-50 to-purple-50 p-6 shadow-lg">
+        <!-- Right side -->
+        <div class="rounded-3xl bg-gradient-to-br from-yellow-50 via-pink-50 to-purple-50 p-6 shadow-lg dark:from-gray-800 dark:via-gray-800 dark:to-gray-700">
           <p class="inline-block rounded-full bg-red-100 px-4 py-1 text-sm font-bold text-red-600">
             SALE 🎧
           </p>
 
-          <h2 class="mt-4 text-3xl font-extrabold text-gray-800 sm:text-4xl">
+          <h2 class="mt-4 text-3xl font-extrabold text-gray-800 dark:text-white sm:text-4xl">
             Best Deal for You
           </h2>
 
-          <p class="mt-3 text-base leading-7 text-gray-600 sm:text-lg">
-            Grab the <span class="font-bold text-purple-700">Headset</span> and
-            <span class="font-bold text-purple-700">iPhone 13 Pro</span>
+          <p class="mt-3 text-base leading-7 text-gray-600 dark:text-gray-300 sm:text-lg">
+            Grab the <span class="font-bold text-purple-700 dark:text-purple-300">Headset</span> and
+            <span class="font-bold text-purple-700 dark:text-purple-300">iPhone 13 Pro</span>
             with an exciting
             <span class="font-bold text-red-500">25% OFF</span>.
           </p>
 
           <div class="mt-4 flex flex-wrap items-center gap-3 text-lg font-bold sm:text-xl">
             <span class="text-gray-400 line-through">$1200</span>
-            <span class="text-purple-700">$900</span>
+            <span class="text-purple-700 dark:text-purple-300">$900</span>
           </div>
 
           <div class="mt-6 grid grid-cols-2 gap-4">
-            <div class="rounded-2xl bg-white p-4 shadow-md">
+            <div class="rounded-2xl bg-white p-4 shadow-md dark:bg-gray-800">
               <img
                 :src="headsetOffer"
                 alt="Headset"
                 class="h-28 w-full object-contain sm:h-36"
               />
-              <p class="mt-2 text-center font-bold text-gray-800">Headset</p>
+              <p class="mt-2 text-center font-bold text-gray-800 dark:text-white">Headset</p>
             </div>
 
-            <div class="rounded-2xl bg-white p-4 shadow-md">
+            <div class="rounded-2xl bg-white p-4 shadow-md dark:bg-gray-800">
               <img
                 :src="iphoneOffer"
                 alt="iPhone 13 Pro"
                 class="h-28 w-full object-contain sm:h-36"
               />
-              <p class="mt-2 text-center font-bold text-gray-800">iPhone 13 Pro</p>
+              <p class="mt-2 text-center font-bold text-gray-800 dark:text-white">iPhone 13 Pro</p>
             </div>
           </div>
 
           <div class="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-           <div class="star-badge">
-  <span>25%<br />OFF</span>
-</div>
+            <div class="star-badge">
+              <span>25%<br />OFF</span>
+            </div>
+
             <RouterLink
               to="/products"
               class="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
@@ -111,7 +112,7 @@
             </RouterLink>
           </div>
 
-          <p class="mt-5 rounded-2xl bg-white p-4 text-sm leading-6 text-gray-700 shadow-sm sm:text-base">
+          <p class="mt-5 rounded-2xl bg-white p-4 text-sm leading-6 text-gray-700 shadow-sm dark:bg-gray-800 dark:text-gray-300 sm:text-base">
             Upgrade your everyday tech with premium sound and flagship style — now at a smarter price for a limited time.
           </p>
         </div>
@@ -160,6 +161,7 @@ const categoryItems = [
   },
 ]
 </script>
+
 <style scoped>
 .star-badge {
   width: 100px;
