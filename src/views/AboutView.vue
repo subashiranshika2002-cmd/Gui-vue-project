@@ -21,11 +21,11 @@
         <div class="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
           <!-- Left -->
           <div>
-            <p class="mb-3 inline-block rounded-full bg-purple-100 px-4 py-1 text-xs font-semibold text-purple-700 sm:text-sm">
+            <p class="mb-3 inline-block rounded-full bg-purple-100 px-4 py-1 text-xs font-semibold text-purple-700 sm:text-sm dark:bg-purple-900 dark:text-purple-200">
               Why Customers Love VoltEdge
             </p>
 
-            <h2 class="mb-4 text-3xl font-extrabold text-purple-700 sm:text-4xl">
+            <h2 class="mb-4 text-3xl font-extrabold text-purple-700 dark:text-purple-300 sm:text-4xl">
               Why Choose Us?
             </h2>
 
@@ -65,7 +65,7 @@
 
               <RouterLink
                 to="/products"
-                class="rounded-xl border-2 border-pink-300 bg-white px-6 py-3 text-center font-semibold text-pink-600 transition hover:bg-pink-50 dark:bg-gray-800"
+                class="rounded-xl border-2 border-pink-300 bg-white px-6 py-3 text-center font-semibold text-pink-600 transition hover:bg-pink-50 dark:border-pink-400 dark:bg-gray-800 dark:text-pink-300 dark:hover:bg-gray-700"
               >
                 View Products
               </RouterLink>
@@ -73,7 +73,7 @@
           </div>
 
           <!-- Right -->
-          <div class="flex justify-center">
+          <div class="flex justify-center rounded-3xl bg-gray-50 p-4 dark:bg-gray-700">
             <img
               :src="contactImage"
               alt="Contact details"
@@ -88,5 +88,4 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
-import contactImage from '../assets/about/contact-image.png'
-</script>
+import contactImage from '../assets/about/contact-image.png'</script>

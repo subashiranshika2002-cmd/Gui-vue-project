@@ -1,5 +1,5 @@
 <template>
-  <div :class="darkMode ? 'dark bg-gray-900 text-white' : 'bg-white text-black'">
+  <div class="min-h-screen">
     <nav
       :class="
         darkMode
@@ -8,8 +8,7 @@
       "
     >
       <div class="mx-auto flex max-w-7xl flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        <!-- Brand -->
-        <div class="flex items-center gap-3">
+     <div class="flex items-center gap-3">
           <button class="flex flex-col gap-1">
             <span class="h-2 w-8 rounded-full bg-white"></span>
             <span class="h-2 w-8 rounded-full bg-white"></span>
@@ -17,14 +16,13 @@
           </button>
 
           <h1 class="text-2xl font-semibold italic sm:text-3xl">
-            <span class="text-black dark:text-white">Volt</span>
+            <span :class="darkMode ? 'text-white' : 'text-black'">Volt</span>
             <span class="mx-1 text-xl text-orange-300 sm:text-2xl">⚡</span>
             <span class="text-pink-300">Edge</span>
           </h1>
         </div>
 
-        <!-- Search -->
-        <div class="w-full lg:max-w-sm">
+       <div class="w-full lg:max-w-sm">
           <input
             type="text"
             placeholder="Search products..."
@@ -36,15 +34,13 @@
           />
         </div>
 
-        <!-- Right side -->
-        <div class="flex flex-wrap items-center gap-4 text-sm font-semibold sm:gap-6 sm:text-base">
+      <div class="flex flex-wrap items-center gap-4 text-sm font-semibold sm:gap-6 sm:text-base">
           <RouterLink to="/login" class="hover:text-yellow-200">Login</RouterLink>
           <RouterLink to="/about" class="hover:text-yellow-200">About Us</RouterLink>
           <RouterLink to="/" class="hover:text-yellow-200">Home</RouterLink>
           <RouterLink to="/products" class="hover:text-yellow-200">Products</RouterLink>
 
-          <!-- Dark mode button -->
-          <button
+        <button
             @click="toggleDarkMode"
             class="rounded-lg bg-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/30"
           >
@@ -54,27 +50,38 @@
       </div>
     </nav>
 
-    <main :class="darkMode ? 'bg-gray-900 text-white min-h-screen' : 'bg-gray-100 text-black min-h-screen'">
+    <main class="min-h-screen bg-gray-100 text-black dark:bg-gray-900 dark:text-white">
       <RouterView />
     </main>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 
 const darkMode = ref(false)
 
 onMounted(() => {
   const savedMode = localStorage.getItem('darkMode')
-  if (savedMode !== null) {
-    darkMode.value = savedMode === 'true'
-  }
+  darkMode.value = savedMode === 'true'
+  applyDarkClass()
+})
+
+watch(darkMode, () => {
+  applyDarkClass()
+  localStorage.setItem('darkMode', darkMode.value)
 })
 
 function toggleDarkMode() {
   darkMode.value = !darkMode.value
-  localStorage.setItem('darkMode', darkMode.value)
+}
+
+function applyDarkClass() {
+  if (darkMode.value) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
 }
 </script>
